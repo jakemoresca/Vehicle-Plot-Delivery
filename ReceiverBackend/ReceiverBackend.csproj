@@ -11,6 +11,7 @@
   </ItemGroup>
 
   <ItemGroup>
+    <ProjectReference Include="..\Common.Storage\Common.Storage.csproj" />
     <ProjectReference Include="..\Common\Common.csproj" />
   </ItemGroup>
 
