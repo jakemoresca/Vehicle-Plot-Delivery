@@ -1,0 +1,10 @@
+zadd vehicle:1 125151515151 '{"vehicleId":1, "longitude":1.5, "latitude":1.6, "eventCode":1, "timestamp":125151515151}'
+zadd vehicle:1 125151515153 '{"vehicleId":1, "longitude":1.5, "latitude":1.6, "eventCode":3, "timestamp":125151515153}'
+zadd vehicle:1 125151515155 '{"vehicleId":1, "longitude":1.5, "latitude":1.6, "eventCode":2, "timestamp":125151515155}'
+
+zadd vehicle:2 125151515151 '{"vehicleId":2, "longitude":1.5, "latitude":1.6, "eventCode":1, "timestamp":125151515151}'
+zadd vehicle:2 125151515153 '{"vehicleId":2, "longitude":1.5, "latitude":1.6, "eventCode":3, "timestamp":125151515153}'
+zadd vehicle:2 125151515155 '{"vehicleId":2, "longitude":1.5, "latitude":1.6, "eventCode":2, "timestamp":125151515155}'
+
+zrangebyscore vehicle:1 (125151515151 +inf
+zrangebyscore vehicle:2 (125151515153 +inf
