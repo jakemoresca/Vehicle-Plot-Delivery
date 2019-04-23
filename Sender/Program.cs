@@ -1,23 +1,32 @@
-﻿using Common.Models;
+﻿using CommandLine;
+using Common.Models;
 using Microsoft.Extensions.DependencyInjection;
 using SenderBackend.Services;
 using System;
 
 namespace SenderClient
 {
-    class Program
+    internal class Program
     {
-        static void Main(string[] args)
+        private static void Main(string[] args)
         {
+            CommandLineOptions options = null;
+
+            Parser.Default.ParseArguments<CommandLineOptions>(args)
+                .WithParsed(opts => options = opts)
+                .WithNotParsed(errors => throw new InvalidOperationException(string.Join(Environment.NewLine, errors)));
+
+            if (options == null)
+            {
+                throw new InvalidOperationException("unable to parse arguments");
+            }
+
             var serviceProvider = CreateServiceProvider();
 
             var vehiclePlotService = serviceProvider.GetRequiredService<IVehiclePlotService>();
 
             var vehiclePlot = new VehiclePlot(1, 1, 1, DateTime.UtcNow, EventCode.IgnitionOn);
             vehiclePlotService.Send(vehiclePlot);
-
-            Console.WriteLine(" Press [enter] to exit.");
-            Console.ReadLine();
         }
 
         private static ServiceProvider CreateServiceProvider()
