@@ -8,7 +8,7 @@ namespace SenderClient
 {
     public static class SenderClientDependencyInjection
     {
-        public static void Register(ServiceCollection serviceCollection)
+        public static void Register(IServiceCollection serviceCollection)
         {
             serviceCollection.AddSingleton<IVehiclePlotPeriodicUpdateService, VehiclePlotPeriodicUpdateService>();
             serviceCollection.AddLogging(x => x.AddConsole());

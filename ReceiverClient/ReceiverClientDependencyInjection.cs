@@ -7,7 +7,7 @@ namespace ReceiverClient
 {
     public class ReceiverClientDependencyInjection
     {
-        public static void Register(ServiceCollection serviceCollection)
+        public static void Register(IServiceCollection serviceCollection)
         {
             ReceiverBackEndDependencyInjection.Register(serviceCollection);
 

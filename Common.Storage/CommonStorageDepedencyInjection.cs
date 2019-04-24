@@ -10,9 +10,9 @@ namespace Common.Storage
 {
     public static class CommonStorageDepedencyInjection
     {
-        public static void Register(ServiceCollection serviceCollection)
+        public static void Register(IServiceCollection serviceCollection)
         {
-            serviceCollection.AddScoped<IRedisSettingsService, RedisSettingsService>();
+            serviceCollection.AddSingleton<IRedisSettingsService, RedisSettingsService>();
             serviceCollection.AddScoped<IVehiclePlotFactory, VehiclePlotFactory>();
             serviceCollection.AddScoped<IVehiclePlotRepository, VehiclePlotRepository>();
             serviceCollection.AddScoped<IVehiclePlotService, VehiclePlotService>();

@@ -6,7 +6,7 @@ namespace ReceiverBackend
 {
     public static class ReceiverBackEndDependencyInjection
     {
-        public static void Register(ServiceCollection serviceCollection)
+        public static void Register(IServiceCollection serviceCollection)
         {
             serviceCollection.AddScoped<IMessageReceiverService, MessageReceiverService>();
             serviceCollection.AddScoped<IMessageProcessingService, MessageProcessingService>();

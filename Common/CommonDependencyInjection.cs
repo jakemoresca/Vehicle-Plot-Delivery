@@ -9,7 +9,7 @@ namespace Common
 {
     public static class CommonDependencyInjection
     {
-        public static void Register(ServiceCollection serviceCollection)
+        public static void Register(IServiceCollection serviceCollection)
         {
             serviceCollection.AddScoped<IPlotConnectionFactory, PlotConnectionFactory>();
             serviceCollection.AddScoped<IQueueSettingsService, QueueSettingsService>();
