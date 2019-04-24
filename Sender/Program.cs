@@ -1,7 +1,6 @@
 ﻿using CommandLine;
-using Common.Models;
 using Microsoft.Extensions.DependencyInjection;
-using SenderBackend.Services;
+using SenderClient.Services;
 using System;
 
 namespace SenderClient
@@ -10,6 +9,9 @@ namespace SenderClient
     {
         private static void Main(string[] args)
         {
+            Console.WriteLine("Vehicle Plot Sender Client");
+            Console.WriteLine("Press Ctrl + C to close.");
+
             CommandLineOptions options = null;
 
             Parser.Default.ParseArguments<CommandLineOptions>(args)
@@ -22,11 +24,14 @@ namespace SenderClient
             }
 
             var serviceProvider = CreateServiceProvider();
+            var vehiclePlotPeriodicUpdateService = serviceProvider.GetRequiredService<IVehiclePlotPeriodicUpdateService>();
 
-            var vehiclePlotService = serviceProvider.GetRequiredService<IVehiclePlotService>();
+            vehiclePlotPeriodicUpdateService.Start(options.Interval, options.VehicleId);
 
-            var vehiclePlot = new VehiclePlot(1, 1, 1, DateTime.UtcNow, EventCode.IgnitionOn);
-            vehiclePlotService.Send(vehiclePlot);
+            Console.ReadLine();
+            vehiclePlotPeriodicUpdateService.Stop();
+
+            return;
         }
 
         private static ServiceProvider CreateServiceProvider()

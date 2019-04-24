@@ -1,5 +1,6 @@
 ﻿using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
+using Microsoft.Extensions.Logging;
 using ReceiverBackend;
 
 namespace ReceiverClient
@@ -9,6 +10,12 @@ namespace ReceiverClient
         public static void Register(ServiceCollection serviceCollection)
         {
             ReceiverBackEndDependencyInjection.Register(serviceCollection);
+
+            serviceCollection.AddLogging(configure =>
+            {
+                configure.AddConsole()
+                    .AddEventLog();
+            });
 
             var config = CreateConfigurationBuilder();
             serviceCollection.AddSingleton(typeof(IConfiguration), config);

@@ -1,5 +1,4 @@
-﻿using Common.Factories;
-using Common.Services;
+﻿using Common.Services;
 using RabbitMQ.Client;
 using RabbitMQ.Client.Events;
 
@@ -7,22 +6,20 @@ namespace ReceiverBackend.Services
 {
     public class MessageReceiverService : IMessageReceiverService
     {
-        private readonly IPlotConnectionFactory _plotConnectionFactory;
         private readonly IQueueSettingsService _queueSettingsService;
         private readonly IMessageProcessingService _messageProcessingService;
+        private readonly IConnection _connection;
 
-        public MessageReceiverService(IPlotConnectionFactory plotConnectionFactory, IQueueSettingsService queueSettingsService, IMessageProcessingService messageProcessingService)
+        public MessageReceiverService(IQueueSettingsService queueSettingsService, IMessageProcessingService messageProcessingService, IConnection connection)
         {
-            _plotConnectionFactory = plotConnectionFactory;
             _queueSettingsService = queueSettingsService;
             _messageProcessingService = messageProcessingService;
+            _connection = connection;
         }
 
         public void StartReceivingMessage()
         {
-            var connection = _plotConnectionFactory.GetOrCreate(_queueSettingsService.RabbitMQUri);
-            var channel = connection.CreateModel();
-
+            var channel = _connection.CreateModel();
             channel.QueueDeclare(queue: _queueSettingsService.Queue,
                                  durable: true,
                                  exclusive: false,
@@ -41,19 +38,18 @@ namespace ReceiverBackend.Services
 
         public void StopReceivingMessage()
         {
-            var connection = _plotConnectionFactory.GetOrCreate(_queueSettingsService.RabbitMQUri);
-            connection.Close();
+            _connection.Close();
         }
 
         private void AddReceivedEvent(IModel channel, EventingBasicConsumer consumer)
         {
-            consumer.Received += (model, ea) =>
+            consumer.Received += (model, eventArguments) =>
             {
-                var body = ea.Body;
+                var body = eventArguments.Body;
 
                 _messageProcessingService.Process(body);
 
-                channel.BasicAck(deliveryTag: ea.DeliveryTag, multiple: false);
+                channel.BasicAck(deliveryTag: eventArguments.DeliveryTag, multiple: false);
             };
         }
     }
