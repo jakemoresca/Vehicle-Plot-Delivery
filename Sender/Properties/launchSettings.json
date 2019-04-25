@@ -1,0 +1,8 @@
+{
+  "profiles": {
+    "SenderClient": {
+      "commandName": "Project",
+      "commandLineArgs": "--vid 1 --interval 5000"
+    }
+  }
+}

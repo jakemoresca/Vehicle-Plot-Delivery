@@ -1,13 +1,18 @@
 ﻿using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
+using Microsoft.Extensions.Logging;
 using SenderBackend;
+using SenderClient.Services;
 
 namespace SenderClient
 {
     public static class SenderClientDependencyInjection
     {
-        public static void Register(ServiceCollection serviceCollection)
+        public static void Register(IServiceCollection serviceCollection)
         {
+            serviceCollection.AddSingleton<IVehiclePlotPeriodicUpdateService, VehiclePlotPeriodicUpdateService>();
+            serviceCollection.AddLogging(x => x.AddConsole());
+
             SenderBackendDependencyInjection.Register(serviceCollection);
 
             var config = CreateConfigurationBuilder();

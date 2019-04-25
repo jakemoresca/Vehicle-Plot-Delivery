@@ -1,23 +1,37 @@
-﻿using Common.Models;
+﻿using CommandLine;
 using Microsoft.Extensions.DependencyInjection;
-using SenderBackend.Services;
+using SenderClient.Services;
 using System;
 
 namespace SenderClient
 {
-    class Program
+    internal class Program
     {
-        static void Main(string[] args)
+        private static void Main(string[] args)
         {
+            Console.WriteLine("Vehicle Plot Sender Client");
+            Console.WriteLine("Press Ctrl + C to close.");
+
+            CommandLineOptions options = null;
+
+            Parser.Default.ParseArguments<CommandLineOptions>(args)
+                .WithParsed(opts => options = opts)
+                .WithNotParsed(errors => throw new InvalidOperationException(string.Join(Environment.NewLine, errors)));
+
+            if (options == null)
+            {
+                throw new InvalidOperationException("unable to parse arguments");
+            }
+
             var serviceProvider = CreateServiceProvider();
+            var vehiclePlotPeriodicUpdateService = serviceProvider.GetRequiredService<IVehiclePlotPeriodicUpdateService>();
 
-            var vehiclePlotService = serviceProvider.GetRequiredService<IVehiclePlotService>();
+            vehiclePlotPeriodicUpdateService.Start(options.Interval, options.VehicleId);
 
-            var vehiclePlot = new VehiclePlot(1, 1, 1, DateTime.UtcNow, EventCode.IgnitionOn);
-            vehiclePlotService.Send(vehiclePlot);
-
-            Console.WriteLine(" Press [enter] to exit.");
             Console.ReadLine();
+            vehiclePlotPeriodicUpdateService.Stop();
+
+            return;
         }
 
         private static ServiceProvider CreateServiceProvider()

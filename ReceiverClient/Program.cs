@@ -1,8 +1,7 @@
-﻿using Common.Services;
-using Microsoft.Extensions.DependencyInjection;
-using RabbitMQ.Client;
+﻿using Microsoft.Extensions.DependencyInjection;
+using Microsoft.Extensions.Logging;
 using ReceiverBackend.Services;
-using System;
+using System.ServiceProcess;
 
 namespace ReceiverClient
 {
@@ -12,11 +11,12 @@ namespace ReceiverClient
         {
             var serviceProvider = CreateServiceProvider();
             var messageReceiverService = serviceProvider.GetRequiredService<IMessageReceiverService>();
+            var logger = serviceProvider.GetRequiredService<ILogger<ReceiverService>>();
 
 #if DEBUG
             messageReceiverService.StartReceivingMessage();
 #else
-            using (var service = new ReceiverService(messageReceiverService))
+            using (var service = new ReceiverService(messageReceiverService, logger))
             {
                 ServiceBase.Run(service);
             }

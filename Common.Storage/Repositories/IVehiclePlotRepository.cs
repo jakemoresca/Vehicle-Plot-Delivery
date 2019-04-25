@@ -6,7 +6,7 @@ namespace Common.Storage.Repositories
 {
     public interface IVehiclePlotRepository
     {
-        Task<bool> InsertAsync(VehiclePlot vehiclePlot);
-        Task<List<VehiclePlot>> FindAllVehiclePlotsAsync(string id, double score);
+        Task InsertAsync(VehiclePlot vehiclePlot);
+        Task<List<VehiclePlot>> FindAllVehiclePlotsAsync(int id, double score);
     }
 }

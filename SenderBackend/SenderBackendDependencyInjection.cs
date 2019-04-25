@@ -6,7 +6,7 @@ namespace SenderBackend
 {
     public static class SenderBackendDependencyInjection
     {
-        public static void Register(ServiceCollection serviceCollection)
+        public static void Register(IServiceCollection serviceCollection)
         {
             serviceCollection.AddScoped<IVehiclePlotService, VehiclePlotService>();
             serviceCollection.AddScoped<IMessagingService, MessagingService>();

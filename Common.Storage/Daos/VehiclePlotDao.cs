@@ -12,13 +12,13 @@ namespace Common.Storage.Daos
             _database = connectionMultiplexer.GetDatabase();
         }
 
-        public async Task<bool> InsertAsync(VehiclePlotDto vehiclePlotDto)
+        public async Task InsertAsync(VehiclePlotDto vehiclePlotDto)
         {
             var vehiclePlotKey = $"vehicle-plot-delivery:vehicle:{vehiclePlotDto.Id}";
-            return await _database.SortedSetAddAsync(vehiclePlotKey, vehiclePlotDto.Definition, vehiclePlotDto.Score);
+            await _database.SortedSetAddAsync(vehiclePlotKey, vehiclePlotDto.Definition, vehiclePlotDto.Score);
         }
 
-        public async Task<RedisValue[]> FindAllVehiclePlotsAsync(string vehiclePlotId, double score)
+        public async Task<RedisValue[]> FindAllVehiclePlotsAsync(int vehiclePlotId, double score)
         {
             var vehiclePlotKey = $"vehicle-plot-delivery:vehicle:{vehiclePlotId}";
             return await _database.SortedSetRangeByScoreAsync(vehiclePlotKey, score);

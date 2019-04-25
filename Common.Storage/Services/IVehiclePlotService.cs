@@ -7,7 +7,7 @@ namespace Common.Storage.Services
 {
     public interface IVehiclePlotService
     {
-        Task<bool> InsertAsync(VehiclePlot vehiclePlot);
+        Task InsertAsync(VehiclePlot vehiclePlot);
         Task<List<VehiclePlot>> FindAllVehiclePlotsAsync(int vehicleId, DateTime timestamp);
     }
 }

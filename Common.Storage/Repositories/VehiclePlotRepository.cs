@@ -18,13 +18,13 @@ namespace Common.Storage.Repositories
             _vehiclePlotDao = vehiclePlotDao;
         }
 
-        public async Task<bool> InsertAsync(VehiclePlot vehiclePlot)
+        public async Task InsertAsync(VehiclePlot vehiclePlot)
         {
             var vehiclePlotDto = _vehiclePlotFactory.ToDto(vehiclePlot);
-            return await _vehiclePlotDao.InsertAsync(vehiclePlotDto);
+            await _vehiclePlotDao.InsertAsync(vehiclePlotDto);
         }
 
-        public async Task<List<VehiclePlot>> FindAllVehiclePlotsAsync(string id, double score)
+        public async Task<List<VehiclePlot>> FindAllVehiclePlotsAsync(int id, double score)
         {
             var vehiclePlotValues = await _vehiclePlotDao.FindAllVehiclePlotsAsync(id, score);
             return vehiclePlotValues.Select(_vehiclePlotFactory.ToModel).ToList();
