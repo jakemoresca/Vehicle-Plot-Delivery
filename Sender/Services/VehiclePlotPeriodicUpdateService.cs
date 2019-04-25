@@ -37,7 +37,7 @@ namespace SenderClient.Services
                 var vehiclePlot = VehiclePlotHelper.GetNextVehiclePlot(_lastVehiclePlot);
 
                 _logger.LogInformation($"Sending vehicle plot: {{ vehicleId: {vehiclePlot.VehicleId}, longitude: {vehiclePlot.Longitude}, " +
-                    $"latitude: {vehiclePlot.Latitute}, timestamp: {vehiclePlot.Timestamp}, eventCode: {vehiclePlot.EventCode.ToString()} }}");
+                    $"latitude: {vehiclePlot.Latitude}, timestamp: {vehiclePlot.Timestamp}, eventCode: {vehiclePlot.EventCode.ToString()} }}");
 
                 _vehiclePlotService.Send(vehiclePlot);
                 _lastVehiclePlot = vehiclePlot;

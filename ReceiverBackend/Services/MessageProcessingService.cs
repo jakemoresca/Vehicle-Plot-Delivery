@@ -27,7 +27,7 @@ namespace ReceiverBackend.Services
             var vehiclePlot = _vehiclePlotMapper.ToModel(vehiclePlotDto);
 
             _logger.LogInformation($"Processing vehicle plot: {{ vehicleId: {vehiclePlot.VehicleId}, longitude: {vehiclePlot.Longitude}, " +
-                    $"latitude: {vehiclePlot.Latitute}, timestamp: {vehiclePlot.Timestamp}, eventCode: {vehiclePlot.EventCode.ToString()} }}");
+                    $"latitude: {vehiclePlot.Latitude}, timestamp: {vehiclePlot.Timestamp}, eventCode: {vehiclePlot.EventCode.ToString()} }}");
 
             _vehiclePlotService.InsertAsync(vehiclePlot);
         }

@@ -15,14 +15,14 @@ namespace Common.Storage.Services
             _vehiclePlotRepository = vehiclePlotRepository;
         }
 
-        public async Task<bool> InsertAsync(VehiclePlot vehiclePlot)
+        public async Task InsertAsync(VehiclePlot vehiclePlot)
         {
-            return await _vehiclePlotRepository.InsertAsync(vehiclePlot);
+            await _vehiclePlotRepository.InsertAsync(vehiclePlot);
         }
 
         public async Task<List<VehiclePlot>> FindAllVehiclePlotsAsync(int vehicleId, DateTime timestamp)
         {
-            return await _vehiclePlotRepository.FindAllVehiclePlotsAsync(vehicleId.ToString(), timestamp.ToOADate());
+            return await _vehiclePlotRepository.FindAllVehiclePlotsAsync(vehicleId, timestamp.ToOADate());
         }
     }
 }

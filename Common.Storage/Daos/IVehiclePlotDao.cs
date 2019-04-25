@@ -5,7 +5,7 @@ namespace Common.Storage.Daos
 {
     public interface IVehiclePlotDao
     {
-        Task<bool> InsertAsync(VehiclePlotDto vehiclePlotDto);
-        Task<RedisValue[]> FindAllVehiclePlotsAsync(string vehiclePlotId, double score);
+        Task InsertAsync(VehiclePlotDto vehiclePlotDto);
+        Task<RedisValue[]> FindAllVehiclePlotsAsync(int vehiclePlotId, double score);
     }
 }

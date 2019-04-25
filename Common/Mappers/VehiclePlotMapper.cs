@@ -10,7 +10,7 @@ namespace Common.Mappers
             return new VehiclePlotDto
             {
                 VehicleId = vehiclePlot.VehicleId,
-                Latitute = vehiclePlot.Latitute,
+                Latitude = vehiclePlot.Latitude,
                 Longitude = vehiclePlot.Longitude,
                 Timestamp = vehiclePlot.Timestamp,
                 EventCode = vehiclePlot.EventCode
@@ -19,7 +19,7 @@ namespace Common.Mappers
 
         public VehiclePlot ToModel(VehiclePlotDto vehiclePlotDto)
         {
-            return new VehiclePlot(vehiclePlotDto.VehicleId, vehiclePlotDto.Latitute, vehiclePlotDto.Longitude, vehiclePlotDto.Timestamp, vehiclePlotDto.EventCode);
+            return new VehiclePlot(vehiclePlotDto.VehicleId, vehiclePlotDto.Latitude, vehiclePlotDto.Longitude, vehiclePlotDto.Timestamp, vehiclePlotDto.EventCode);
         }
     }
 }

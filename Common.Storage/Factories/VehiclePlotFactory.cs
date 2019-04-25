@@ -14,7 +14,9 @@ namespace Common.Storage.Factories
         {
             _jsonSerializerSettings = new JsonSerializerSettings
             {
-                ContractResolver = new CamelCasePropertyNamesContractResolver()
+                ContractResolver = new CamelCasePropertyNamesContractResolver(),
+                DateTimeZoneHandling = DateTimeZoneHandling.Utc,
+                DateFormatHandling = DateFormatHandling.IsoDateFormat
             };
         }
 
@@ -24,7 +26,7 @@ namespace Common.Storage.Factories
 
             return new VehiclePlotDto
             {
-                Id = vehiclePlot.VehicleId.ToString(),
+                Id = vehiclePlot.VehicleId,
                 Definition = definition,
                 Score = vehiclePlot.Timestamp.ToOADate()
             };
