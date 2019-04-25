@@ -1,7 +1,6 @@
 ﻿using Common.Mappers;
 using Common.Models;
 using Common.Serializers;
-using Common.Services;
 
 namespace SenderBackend.Services
 {
