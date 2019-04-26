@@ -24,9 +24,9 @@ namespace Common.Storage.Repositories
             await _vehiclePlotDao.InsertAsync(vehiclePlotDto);
         }
 
-        public async Task<List<VehiclePlot>> FindAllVehiclePlotsAsync(int id, double score)
+        public async Task<List<VehiclePlot>> FindVehiclePlotsAsync(int id, double start, double stop)
         {
-            var vehiclePlotValues = await _vehiclePlotDao.FindAllVehiclePlotsAsync(id, score);
+            var vehiclePlotValues = await _vehiclePlotDao.FindAllVehiclePlotsAsync(id, start, stop);
             return vehiclePlotValues.Select(_vehiclePlotFactory.ToModel).ToList();
         }
     }

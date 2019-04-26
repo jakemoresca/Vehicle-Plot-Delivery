@@ -47,10 +47,10 @@ namespace Common.Storage.UnitTests.Daos
         }
 
         [Theory]
-        [InlineData(1, 123.45)]
-        [InlineData(2, 0)]
-        [InlineData(3, 12414141)]
-        public async Task Should_find_all_vehicle_plots(int id, double score)
+        [InlineData(1, 123.45, 456.78)]
+        [InlineData(2, 0, 1)]
+        [InlineData(3, 12414141, 2515151)]
+        public async Task Should_find_all_vehicle_plots(int id, double start, double stop)
         {
             //Arrange
             _database.Setup(x => x.SortedSetRangeByScoreAsync(It.IsAny<string>(), It.IsAny<double>(), It.IsAny<double>(), It.IsAny<Exclude>(),
@@ -60,11 +60,10 @@ namespace Common.Storage.UnitTests.Daos
             var Sut = new VehiclePlotDao(_connectionMultiplexer.Object);
 
             //Act
-            await Sut.FindAllVehiclePlotsAsync(id, score);
+            await Sut.FindAllVehiclePlotsAsync(id, start, stop);
 
             //Assert
-            _database.Verify(x => x.SortedSetRangeByScoreAsync($"vehicle-plot-delivery:vehicle:{id}", score, double.PositiveInfinity, 
-                Exclude.None, Order.Ascending, 0, -1, CommandFlags.None));
+            _database.Verify(x => x.SortedSetRangeByScoreAsync($"vehicle-plot-delivery:vehicle:{id}", start, stop, Exclude.None, Order.Ascending, 0, -1, CommandFlags.None));
         }
     }
 }
