@@ -19,10 +19,5 @@ namespace Common.Storage.Services
         {
             await _vehiclePlotRepository.InsertAsync(vehiclePlot);
         }
-
-        public async Task<List<VehiclePlot>> FindAllVehiclePlotsAsync(int vehicleId, DateTime timestamp)
-        {
-            return await _vehiclePlotRepository.FindAllVehiclePlotsAsync(vehicleId, timestamp.ToOADate());
-        }
     }
 }

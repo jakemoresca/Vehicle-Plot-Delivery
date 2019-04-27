@@ -18,10 +18,10 @@ namespace Common.Storage.Daos
             await _database.SortedSetAddAsync(vehiclePlotKey, vehiclePlotDto.Definition, vehiclePlotDto.Score);
         }
 
-        public async Task<RedisValue[]> FindAllVehiclePlotsAsync(int vehiclePlotId, double score)
+        public async Task<RedisValue[]> FindAllVehiclePlotsAsync(int vehiclePlotId, double start, double stop)
         {
             var vehiclePlotKey = $"vehicle-plot-delivery:vehicle:{vehiclePlotId}";
-            return await _database.SortedSetRangeByScoreAsync(vehiclePlotKey, score);
+            return await _database.SortedSetRangeByScoreAsync(vehiclePlotKey, start, stop);
         }
     }
 }
