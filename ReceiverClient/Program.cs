@@ -1,6 +1,8 @@
 ﻿using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Logging;
 using ReceiverBackend.Services;
+using System.Diagnostics;
+using System.Linq;
 using System.ServiceProcess;
 
 namespace ReceiverClient
@@ -9,18 +11,23 @@ namespace ReceiverClient
     {
         static void Main(string[] args)
         {
+            var isConsole = Debugger.IsAttached || args.Contains("--console");
+
             var serviceProvider = CreateServiceProvider();
             var messageReceiverService = serviceProvider.GetRequiredService<IMessageReceiverService>();
             var logger = serviceProvider.GetRequiredService<ILogger<ReceiverService>>();
 
-#if DEBUG
-            messageReceiverService.StartReceivingMessage();
-#else
-            using (var service = new ReceiverService(messageReceiverService, logger))
+            if (isConsole)
             {
-                ServiceBase.Run(service);
+                messageReceiverService.StartReceivingMessage();
             }
-#endif
+            else
+            {
+                using (var service = new ReceiverService(messageReceiverService, logger))
+                {
+                    ServiceBase.Run(service);
+                }
+            }
         }
 
         private static ServiceProvider CreateServiceProvider()
